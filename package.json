@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "demo:qa": "node scripts/demo-qa.mjs"
+    "test:session-list": "node --experimental-strip-types --test src/lib/session-list.test.ts",
+    "demo:qa": "node scripts/demo-qa.mjs",
+    "verify:session-list": "node scripts/verify-session-list.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

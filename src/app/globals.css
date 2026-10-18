@@ -1103,6 +1103,61 @@ a:hover {
   align-items: stretch;
 }
 
+.signal-auth {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.signal-auth-form {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.signal-auth-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+}
+
+.signal-auth-divider::before,
+.signal-auth-divider::after {
+  content: "";
+  height: 1px;
+  background: var(--border);
+}
+
+.signal-auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #0e1c16;
+}
+
+.signal-auth-tab {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  color: var(--fg-muted);
+  font: 600 0.85rem/1 var(--font-sans);
+  cursor: pointer;
+}
+
+.signal-auth-tab[aria-selected="true"] {
+  background: var(--mint);
+  color: var(--mint-ink);
+}
+
 @media (max-width: 800px) {
   .host-event-body {
     grid-template-columns: 1fr;

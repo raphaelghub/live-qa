@@ -1,0 +1,521 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --chrome: #111;
+  --chrome-fg: #f4f4f0;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #0c0c0c;
+  color: #111;
+}
+
+.chrome {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 1rem;
+  background: var(--chrome);
+  color: var(--chrome-fg);
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.chrome-brand {
+  font: 600 0.85rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.switcher button {
+  appearance: none;
+  border: 1px solid #3a3a3a;
+  background: #1a1a1a;
+  color: #ddd;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font: 500 0.85rem/1 "DM Sans", sans-serif;
+  cursor: pointer;
+}
+
+.switcher button.is-active {
+  background: #f4f4f0;
+  color: #111;
+  border-color: #f4f4f0;
+}
+
+.chrome-note {
+  margin: 0;
+  font: 400 0.75rem/1.3 "DM Sans", sans-serif;
+  opacity: 0.7;
+}
+
+#stage {
+  min-height: calc(100vh - 7rem);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: inherit;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-height: 70vh;
+}
+
+.panel-label {
+  font: 500 0.7rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* ——— Variant A: Signal ——— */
+[data-variant="a"] .panel.host {
+  background: linear-gradient(160deg, #0f1f1a 0%, #16352c 45%, #0c1612 100%);
+  color: #e8f5ef;
+  font-family: "Outfit", sans-serif;
+}
+
+[data-variant="a"] .panel.participant {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #1d4a3a33, transparent),
+    #0a1210;
+  color: #e7efe9;
+  font-family: "Outfit", sans-serif;
+}
+
+[data-variant="a"] .brand {
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+  color: #7dffb3;
+}
+
+[data-variant="a"] .headline {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+[data-variant="a"] .sub {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+[data-variant="a"] .join {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: #11241c;
+  border: 1px solid #2f5a45;
+  border-radius: 999px;
+  padding: 0.35rem 0.35rem 0.35rem 1rem;
+}
+
+[data-variant="a"] .join span {
+  opacity: 0.5;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+[data-variant="a"] .join input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: 500 1rem/1.2 "Outfit", sans-serif;
+  outline: none;
+}
+
+[data-variant="a"] .join button,
+[data-variant="a"] .btn {
+  border: 0;
+  border-radius: 999px;
+  background: #7dffb3;
+  color: #062015;
+  font: 600 0.85rem/1 "Outfit", sans-serif;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+}
+
+[data-variant="a"] .btn.ghost {
+  background: transparent;
+  color: #7dffb3;
+  border: 1px solid #2f5a45;
+}
+
+[data-variant="a"] .card {
+  background: #132820;
+  border: 1px solid #284739;
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+}
+
+[data-variant="a"] .card.hot {
+  background: #1a3d30;
+  border-color: #7dffb3;
+}
+
+[data-variant="a"] .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  opacity: 0.65;
+  margin-bottom: 0.4rem;
+}
+
+[data-variant="a"] .q {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+[data-variant="a"] .vote {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: #7dffb3;
+}
+
+[data-variant="a"] .ask {
+  margin-top: auto;
+  display: grid;
+  gap: 0.5rem;
+}
+
+[data-variant="a"] .ask textarea {
+  width: 100%;
+  min-height: 4.5rem;
+  resize: vertical;
+  border-radius: 1rem;
+  border: 1px solid #2f5a45;
+  background: #0e1c16;
+  color: inherit;
+  padding: 0.85rem 1rem;
+  font: 400 0.95rem/1.4 "Outfit", sans-serif;
+}
+
+[data-variant="a"] .row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ——— Variant B: Forum ——— */
+[data-variant="b"] .panel.host {
+  background: #f7f1e6;
+  color: #1c1914;
+  font-family: "Source Serif 4", Georgia, serif;
+  background-image:
+    linear-gradient(#e7dcc833 1px, transparent 1px),
+    linear-gradient(90deg, #e7dcc833 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+[data-variant="b"] .panel.participant {
+  background: #1a1713;
+  color: #f3ece1;
+  font-family: "DM Sans", sans-serif;
+}
+
+[data-variant="b"] .brand {
+  font-family: "Fraunces", serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+[data-variant="b"] .headline {
+  font-family: "Fraunces", serif;
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+[data-variant="b"] .sub {
+  margin: 0;
+  opacity: 0.7;
+}
+
+[data-variant="b"] .join {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.4rem;
+}
+
+[data-variant="b"] .join input {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: 500 1.1rem/1.2 "DM Sans", sans-serif;
+  outline: none;
+}
+
+[data-variant="b"] .btn {
+  border: 2px solid currentColor;
+  background: transparent;
+  color: inherit;
+  padding: 0.5rem 0.85rem;
+  font: 600 0.8rem/1 "DM Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+[data-variant="b"] .btn.fill {
+  background: #c45c26;
+  border-color: #c45c26;
+  color: #fff8f0;
+}
+
+[data-variant="b"] .card {
+  border: 1px solid #d9cbb5;
+  background: #fffaf2;
+  padding: 0.85rem 1rem;
+}
+
+[data-variant="b"] .panel.participant .card {
+  border-color: #3a342c;
+  background: #221e18;
+}
+
+[data-variant="b"] .card.hot {
+  outline: 3px solid #c45c26;
+  outline-offset: -1px;
+}
+
+[data-variant="b"] .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  opacity: 0.65;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+[data-variant="b"] .q {
+  margin: 0.35rem 0 0;
+  font-size: 1.1rem;
+}
+
+[data-variant="b"] .vote {
+  margin-top: 0.55rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+}
+
+[data-variant="b"] .ask textarea {
+  width: 100%;
+  min-height: 4.5rem;
+  border: 1px solid #3a342c;
+  background: #14110e;
+  color: inherit;
+  padding: 0.85rem;
+  font: 400 0.95rem/1.4 "DM Sans", sans-serif;
+}
+
+[data-variant="b"] .row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+[data-variant="b"] .ask {
+  margin-top: auto;
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* ——— Variant C: Stage ——— */
+[data-variant="c"] .panel.host {
+  background: #eef2f7;
+  color: #0f1720;
+  font-family: "DM Sans", sans-serif;
+}
+
+[data-variant="c"] .panel.participant {
+  background: linear-gradient(180deg, #101820, #0b1016);
+  color: #edf2f7;
+  font-family: "DM Sans", sans-serif;
+}
+
+[data-variant="c"] .brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+[data-variant="c"] .brand em {
+  font-style: normal;
+  color: #3b82f6;
+}
+
+[data-variant="c"] .headline {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+[data-variant="c"] .sub {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
+
+[data-variant="c"] .code-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  border: 1px solid #d5dde8;
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.95rem;
+}
+
+[data-variant="c"] .panel.participant .code-pill {
+  background: #15202b;
+  border-color: #243447;
+}
+
+[data-variant="c"] .btn {
+  border: 0;
+  border-radius: 0.65rem;
+  background: #3b82f6;
+  color: white;
+  font: 600 0.85rem/1 "DM Sans", sans-serif;
+  padding: 0.65rem 0.9rem;
+  cursor: pointer;
+}
+
+[data-variant="c"] .btn.ghost {
+  background: transparent;
+  color: inherit;
+  border: 1px solid #c9d3e0;
+}
+
+[data-variant="c"] .panel.participant .btn.ghost {
+  border-color: #314356;
+}
+
+[data-variant="c"] .board {
+  display: grid;
+  gap: 0.65rem;
+}
+
+[data-variant="c"] .card {
+  background: #fff;
+  border-radius: 0.85rem;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 1px 0 #dfe6ef;
+}
+
+[data-variant="c"] .panel.participant .card {
+  background: #15202b;
+  box-shadow: none;
+  border: 1px solid #243447;
+}
+
+[data-variant="c"] .card.hot {
+  background: #1d4ed8;
+  color: #fff;
+  box-shadow: none;
+}
+
+[data-variant="c"] .panel.participant .card.hot {
+  background: #1e3a8a;
+  border-color: #3b82f6;
+}
+
+[data-variant="c"] .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  opacity: 0.7;
+  margin-bottom: 0.35rem;
+}
+
+[data-variant="c"] .q {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+[data-variant="c"] .vote {
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+[data-variant="c"] .ask {
+  margin-top: auto;
+  display: grid;
+  gap: 0.5rem;
+}
+
+[data-variant="c"] .ask textarea {
+  width: 100%;
+  min-height: 4.2rem;
+  border-radius: 0.85rem;
+  border: 1px solid #314356;
+  background: #0f1720;
+  color: inherit;
+  padding: 0.85rem;
+  font: 400 0.95rem/1.4 "DM Sans", sans-serif;
+}
+
+[data-variant="c"] .row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+[data-variant="c"] .actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+[data-variant="c"] .chip {
+  font-size: 0.7rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  background: #e8eef7;
+}
+
+[data-variant="c"] .card.hot .chip {
+  background: #ffffff33;
+}

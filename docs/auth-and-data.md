@@ -1,0 +1,27 @@
+# Auth and data (Supabase)
+
+Project: `live-qa` (`qzwryvwfuebenxfkfrmf`) in org RLO, region `ca-central-1`.
+URL: `https://qzwryvwfuebenxfkfrmf.supabase.co`
+
+## What login needs
+
+| Actor | Auth | What we store |
+|---|---|---|
+| Host | Supabase Auth email + password (or magic link) | `profiles`, owns `sessions` |
+| Participant | No account by default | Questions with optional `author_name`; votes keyed by browser `voter_key` |
+
+Nothing else is required from you for basic login once Auth email provider is on (default in new projects). Optional later: Google OAuth client IDs, custom SMTP, site URL allowlist for production domain.
+
+## Tables
+
+- `profiles` — host display name, tied to `auth.users`
+- `sessions` — join `code`, title, `asking_open`, `moderation_enabled`
+- `questions` — body, anonymous flag, status, highlight, vote_count
+- `votes` — unique per `(question_id, voter_key)`
+- `replies` — host replies (private flag for later)
+
+Realtime publication includes sessions, questions, votes, replies.
+
+## Local env
+
+`.env.local` holds URL + anon key (gitignored). Use that for the Next app in Phase 3.

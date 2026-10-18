@@ -525,20 +525,158 @@ a:hover {
   font-size: 1.35rem;
 }
 
+.host-sessions-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.host-sessions-tab {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg-muted);
+  font: 600 0.9rem/1 var(--font-sans);
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.host-sessions-tab.is-selected {
+  border-color: var(--mint);
+  color: var(--mint);
+  background: #143528;
+}
+
+.host-sessions-tab-count {
+  font-weight: 500;
+  opacity: 0.75;
+}
+
 .host-sessions-list {
   display: grid;
   gap: 0.65rem;
 }
 
+.host-sessions-divider {
+  margin: 0.35rem 0 0;
+  color: var(--fg-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 .host-session-row {
-  display: block;
-  text-decoration: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "main status more";
+  gap: 0.75rem 1rem;
+  align-items: center;
   color: inherit;
 }
 
 .host-session-row:hover {
   border-color: var(--mint);
   text-decoration: none;
+}
+
+.host-session-main {
+  grid-area: main;
+  display: grid;
+  gap: 0.35rem;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.host-session-main:hover {
+  text-decoration: none;
+}
+
+.host-session-status {
+  grid-area: status;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.host-session-status.is-active {
+  color: var(--mint);
+}
+
+.host-session-status.is-past {
+  color: var(--fg-muted);
+}
+
+.host-session-more {
+  grid-area: more;
+  position: relative;
+}
+
+.host-session-more-btn {
+  appearance: none;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--fg);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font: 700 1rem/1 var(--font-sans);
+}
+
+.host-session-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  min-width: 10rem;
+  display: grid;
+  background: #0e1c16;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.75rem;
+  padding: 0.35rem;
+  z-index: 5;
+  box-shadow: 0 16px 40px #00000066;
+}
+
+.host-session-menu button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font: 500 0.9rem/1.2 var(--font-sans);
+}
+
+.host-session-menu button:hover:not(:disabled) {
+  background: #143528;
+}
+
+.host-session-menu button.is-danger {
+  color: var(--danger);
+}
+
+.host-session-menu button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .host-session-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "main more"
+      "status more";
+  }
 }
 
 .signal-board {
@@ -850,11 +988,6 @@ a:hover {
 .host-sessions-list {
   display: grid;
   gap: 0.65rem;
-}
-
-.host-session-row {
-  display: grid;
-  gap: 0.35rem;
 }
 
 .host-session-row .signal-meta {

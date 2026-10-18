@@ -35,7 +35,8 @@ Organizing structure: status as enum state machine; votes as set keyed by voter;
 
 - `lib/supabase/{client,server,middleware}.ts` — browser/server clients
 - `lib/domain.ts` — types + pure sort helpers
-- `app/(auth)/login|signup` — host email/password
+- `app/login` and `app/signup` — host email/password, Google OAuth, phone OTP
+- `app/auth/callback` — PKCE code exchange for Google
 - `app/host` — list/create sessions (auth required)
 - `app/host/[code]` — moderate: highlight, answer, close asking
 - `app/join` — enter code
@@ -45,5 +46,5 @@ Organizing structure: status as enum state machine; votes as set keyed by voter;
 
 ## Auth
 
-- Hosts: Supabase Auth email/password → `profiles`
+- Hosts: Supabase Auth email/password, Google, or phone OTP → `profiles`
 - Participants: anon key only; optional name on question; `voter_key` in localStorage

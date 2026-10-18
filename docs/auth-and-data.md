@@ -7,10 +7,10 @@ URL: `https://qzwryvwfuebenxfkfrmf.supabase.co`
 
 | Actor | Auth | What we store |
 |---|---|---|
-| Host | Supabase Auth email + password (or magic link) | `profiles`, owns `sessions` |
+| Host | Supabase Auth: email + password, Google OAuth, or phone SMS OTP | `profiles`, owns `sessions` |
 | Participant | No account by default | Questions with optional `author_name`; votes keyed by browser `voter_key` |
 
-Nothing else is required from you for basic login once Auth email provider is on (default in new projects). Optional later: Google OAuth client IDs, custom SMTP, site URL allowlist for production domain.
+Email login works once the email provider is on (default in new projects). Google and phone need dashboard toggles plus secrets. See the README section "Host Google and phone sign-in". Custom SMTP is still optional.
 
 ## Tables
 

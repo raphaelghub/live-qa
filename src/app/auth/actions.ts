@@ -4,7 +4,11 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   type AuthState,
+  EMAIL_CONFIRM_PENDING_MESSAGE,
+  googleProviderError,
+  isRedirectStatus,
   parseE164Phone,
+  phoneProviderError,
   safeNextPath,
 } from "@/lib/host-auth";
 import { createClient } from "@/lib/supabase/server";
@@ -44,12 +48,14 @@ export async function signupAction(
   const password = String(formData.get("password") || "");
   const displayName = String(formData.get("display_name") || "").trim();
 
+  const origin = await requestOrigin();
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: { display_name: displayName || email.split("@")[0] },
+      emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent("/host")}`,
     },
   });
   if (error) return { status: "form", error: error.message };
@@ -57,8 +63,7 @@ export async function signupAction(
   if (!data.session) {
     return {
       status: "form",
-      error:
-        "Account created. Confirm your email (or ask an admin to confirm it), then log in.",
+      error: EMAIL_CONFIRM_PENDING_MESSAGE,
     };
   }
 
@@ -74,20 +79,38 @@ export async function googleSignInAction(
   const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(next)}`;
 
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: { redirectTo },
-  });
-  if (error || !data.url) {
+  const start = () =>
+    supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+
+  const first = await start();
+  if (first.error || !first.data.url) {
     return {
       status: "form",
-      error:
-        error?.message ??
-        "Google sign-in is not enabled yet. Ask an admin to turn on the Google provider.",
+      error: googleProviderError(first.error?.message),
     };
   }
 
-  redirect(data.url);
+  try {
+    const probe = await fetch(first.data.url, { redirect: "manual" });
+    if (!isRedirectStatus(probe.status) && !probe.ok) {
+      let raw = "";
+      try {
+        const body = (await probe.json()) as { msg?: string };
+        raw = body.msg ?? "";
+      } catch {
+        raw = await probe.text();
+      }
+      return { status: "form", error: googleProviderError(raw) };
+    }
+  } catch {
+    redirect(first.data.url);
+  }
+
+  const second = await start();
+  redirect(second.data.url ?? first.data.url);
 }
 
 export async function phoneOtpAction(
@@ -114,7 +137,7 @@ export async function phoneOtpAction(
       phone,
       options: { data: { display_name: phone } },
     });
-    if (error) return { status: "form", error: error.message };
+    if (error) return { status: "form", error: phoneProviderError(error.message) };
     return { status: "phone-code-sent", phone };
   }
 

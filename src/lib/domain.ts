@@ -11,7 +11,55 @@ export type Session = {
   asking_open: boolean;
   moderation_enabled: boolean;
   created_at: string;
+  ended_at: string | null;
 };
+
+export type SessionListTab = "all" | "active" | "past";
+
+export function isSessionPast(session: Pick<Session, "ended_at">): boolean {
+  return session.ended_at != null;
+}
+
+export function sessionRowStatus(
+  session: Pick<Session, "ended_at">,
+): "active" | "past" {
+  return isSessionPast(session) ? "past" : "active";
+}
+
+export function filterSessionsByTab<T extends Pick<Session, "ended_at">>(
+  sessions: T[],
+  tab: SessionListTab,
+): T[] {
+  if (tab === "all") return sessions;
+  if (tab === "active") return sessions.filter((s) => !isSessionPast(s));
+  return sessions.filter(isSessionPast);
+}
+
+export function countSessionsByTab(sessions: Pick<Session, "ended_at">[]): {
+  all: number;
+  active: number;
+  past: number;
+} {
+  const past = sessions.filter(isSessionPast).length;
+  return { all: sessions.length, active: sessions.length - past, past };
+}
+
+export function partitionSessionsForAllTab<T extends Pick<Session, "ended_at">>(
+  sessions: T[],
+): { active: T[]; past: T[] } {
+  const active: T[] = [];
+  const past: T[] = [];
+  for (const session of sessions) {
+    if (isSessionPast(session)) past.push(session);
+    else active.push(session);
+  }
+  return { active, past };
+}
+
+export function duplicateSessionTitle(title: string): string {
+  const trimmed = title.trim() || "Q&A";
+  return `${trimmed} (copy)`;
+}
 
 export type Question = {
   id: string;

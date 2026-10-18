@@ -2,6 +2,10 @@
 
 Self-hosted Slido-like Q&A. Signal UI (variant A). Supabase Auth for hosts. Anonymous participants join with a code.
 
+**Production:** [https://signal-live-qa.netlify.app](https://signal-live-qa.netlify.app)
+
+Deploy note: `npx netlify deploy --prod` (env via `netlify env:set`; never commit `.env*`).
+
 ## Run
 
 ```bash
